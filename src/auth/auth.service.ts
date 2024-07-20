@@ -34,6 +34,10 @@ export class AuthService {
 
   async register(input: RegisterInput) {
     // Validar si el usuario ya existe
+    const secreto = process.env.MY_SECRET;
+    if (!input.secretKey || input.secretKey !== secreto) {
+      throw new UnauthorizedException('Clave secreta inválida');
+    }
     const existingUser = await this.userRepository.findOne({ where: { username: input.username } });
     if (existingUser) {
       throw new ConflictException('El nombre de usuario ya existe');

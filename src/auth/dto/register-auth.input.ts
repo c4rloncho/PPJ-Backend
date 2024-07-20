@@ -10,4 +10,8 @@ export class RegisterInput {
   @IsString()
   @MinLength(6, { message: 'La contraseña debe tener al menos 8 caracteres' })
   password:string;
+
+  @Field()
+  @IsString()
+  secretKey:string;
 }

@@ -37,31 +37,16 @@ type CommentsPaginated {
   total: Int!
 }
 
-type Image {
-  id: Int!
-  title: String!
-  cloudinary_public_id: String!
-  cloudinary_url: String!
-  width: Int!
-  height: Int!
-  created_at: DateTime!
-  is_active: Boolean!
-}
-
 type Query {
   findByUser(id: Int!): [Comment!]!
   findAll: [Comment!]!
   getPaginatedComments(page: Int! = 1, limit: Int! = 7): CommentsPaginated!
-  images: [Image!]!
-  image(id: Int!): Image!
 }
 
 type Mutation {
   login(input: LoginInput!): AuthPayload!
   register(input: RegisterInput!): AuthResponse!
   createComment(input: CreateCommentInput!): Comment!
-  createImage(input: CreateImageInput!): Image!
-  removeImage(id: Int!): Boolean!
 }
 
 input LoginInput {
@@ -72,13 +57,10 @@ input LoginInput {
 input RegisterInput {
   username: String!
   password: String!
+  secretKey: String!
 }
 
 input CreateCommentInput {
   content: String!
   id: Int!
-}
-
-input CreateImageInput {
-  title: String!
 }
