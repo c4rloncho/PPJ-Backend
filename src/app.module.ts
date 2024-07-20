@@ -6,7 +6,6 @@ import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { CommentsModule } from './comments/comments.module';
-import { ImageModule } from './image/image.module';
 
 @Module({
   imports: [AuthModule,CommentsModule,
@@ -25,7 +24,6 @@ import { ImageModule } from './image/image.module';
       synchronize: true,
     }),
     CommentsModule,
-    ImageModule,
     
   ],
   controllers: [],
