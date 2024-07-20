@@ -1,0 +1,84 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Comment {
+  id: Int!
+  content: String!
+  user: User!
+  createdAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type User {
+  id: Int!
+  username: String!
+  password: String!
+  comments: [Comment!]!
+}
+
+type AuthPayload {
+  access_token: String!
+}
+
+type AuthResponse {
+  message: String!
+  success: Boolean!
+}
+
+type CommentsPaginated {
+  comments: [Comment!]!
+  totalPages: Int!
+  currentPage: Int!
+  total: Int!
+}
+
+type Image {
+  id: Int!
+  title: String!
+  cloudinary_public_id: String!
+  cloudinary_url: String!
+  width: Int!
+  height: Int!
+  created_at: DateTime!
+  is_active: Boolean!
+}
+
+type Query {
+  findByUser(id: Int!): [Comment!]!
+  findAll: [Comment!]!
+  getPaginatedComments(page: Int! = 1, limit: Int! = 7): CommentsPaginated!
+  images: [Image!]!
+  image(id: Int!): Image!
+}
+
+type Mutation {
+  login(input: LoginInput!): AuthPayload!
+  register(input: RegisterInput!): AuthResponse!
+  createComment(input: CreateCommentInput!): Comment!
+  createImage(input: CreateImageInput!): Image!
+  removeImage(id: Int!): Boolean!
+}
+
+input LoginInput {
+  username: String!
+  password: String!
+}
+
+input RegisterInput {
+  username: String!
+  password: String!
+}
+
+input CreateCommentInput {
+  content: String!
+  id: Int!
+}
+
+input CreateImageInput {
+  title: String!
+}
