@@ -24,6 +24,7 @@ import { CommentsModule } from './comments/comments.module';
       synchronize: true,
     }),
     CommentsModule,
+  
     
   ],
   controllers: [],
