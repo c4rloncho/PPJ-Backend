@@ -14,11 +14,20 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Video {
+  id: Int!
+  content: String!
+  url: String!
+  createdAt: DateTime!
+  user: User!
+}
+
 type User {
   id: Int!
   username: String!
   password: String!
   comments: [Comment!]!
+  videos: [Video!]!
 }
 
 type AuthPayload {
@@ -37,16 +46,30 @@ type CommentsPaginated {
   total: Int!
 }
 
+type VideoResponse {
+  success: Boolean!
+  message: String!
+}
+
+type PaginatedVideosResponse {
+  videos: [Video!]!
+  totalPages: Int!
+  currentPage: Int!
+  total: Int!
+}
+
 type Query {
   findByUser(id: Int!): [Comment!]!
   findAll: [Comment!]!
   getPaginatedComments(page: Int! = 1, limit: Int! = 7): CommentsPaginated!
+  sharedVideos(page: Int!, limit: Int!): PaginatedVideosResponse!
 }
 
 type Mutation {
   login(input: LoginInput!): AuthPayload!
   register(input: RegisterInput!): AuthResponse!
   createComment(input: CreateCommentInput!): Comment!
+  uploadVideo(input: UploadVideo!): VideoResponse!
 }
 
 input LoginInput {
@@ -63,4 +86,10 @@ input RegisterInput {
 input CreateCommentInput {
   content: String!
   id: Int!
+}
+
+input UploadVideo {
+  id_user: Int!
+  content: String!
+  url: String!
 }
