@@ -1,10 +1,14 @@
-import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { LoginInput } from './dto/login-auth.input';
 import { RegisterInput } from './dto/register-auth.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
-import { NotFoundError } from 'rxjs';
 import * as bcrypt from 'bcrypt';
 
 import { JwtService } from '@nestjs/jwt';
@@ -15,12 +19,15 @@ export class AuthService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private jwtService: JwtService,
-  ){}
-  
-  async login(input: LoginInput):Promise<AuthPayload> {
-    const user = await this.userRepository.findOne({where:{username:input.username},relations:['comments']})
-    
-    if(!user){
+  ) {}
+
+  async login(input: LoginInput): Promise<AuthPayload> {
+    const user = await this.userRepository.findOne({
+      where: { username: input.username },
+      relations: ['comments'],
+    });
+
+    if (!user) {
       throw new NotFoundException('usuario no encontrado');
     }
     const isPasswordValid = await bcrypt.compare(input.password, user.password);
@@ -28,7 +35,7 @@ export class AuthService {
       throw new UnauthorizedException('Credenciales inválidas');
     }
 
-    const payload = {  id: user.id,username: user.username };
+    const payload = { id: user.id, username: user.username };
     return { access_token: this.jwtService.sign(payload) };
   }
 
@@ -38,7 +45,9 @@ export class AuthService {
     if (!input.secretKey || input.secretKey !== secreto) {
       throw new UnauthorizedException('Clave secreta inválida');
     }
-    const existingUser = await this.userRepository.findOne({ where: { username: input.username } });
+    const existingUser = await this.userRepository.findOne({
+      where: { username: input.username },
+    });
     if (existingUser) {
       throw new ConflictException('El nombre de usuario ya existe');
     }
@@ -58,5 +67,4 @@ export class AuthService {
       message: 'Registro exitoso',
     };
   }
-
 }

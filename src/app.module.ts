@@ -8,10 +8,11 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { CommentsModule } from './comments/comments.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { VideosModule } from './videos/videos.module';
-import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
-  imports: [AuthModule,CommentsModule,
+  imports: [
+    AuthModule,
+    CommentsModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
@@ -29,7 +30,6 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
     CommentsModule,
     CloudinaryModule,
     VideosModule,
-    
   ],
   controllers: [],
   providers: [],

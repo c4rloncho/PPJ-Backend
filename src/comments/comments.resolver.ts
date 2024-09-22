@@ -14,16 +14,15 @@ export class CommentsResolver {
     return this.commentsService.create(createCommentInput);
   }
   @Query(() => [Comment])
-  async findByUser(@Args('id',{type:() => Int})id:number ) {
+  async findByUser(@Args('id', { type: () => Int }) id: number) {
     return this.commentsService.findByUser(id);
   }
   @Query(() => [Comment], { name: 'findAll' })
   async findAll() {
-    try{
+    try {
       return this.commentsService.findAll();
-    }
-    catch (error){
-      throw new Error(error.message)
+    } catch (error) {
+      throw new Error(error.message);
     }
   }
   @Query(() => CommentsPaginated)

@@ -1,9 +1,9 @@
-import { Field, InputType, ObjectType } from "@nestjs/graphql";
+import { Field, InputType, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
-export class AuthResponse{
-    @Field()
-    message:string;
-    @Field(()=>Boolean)
-    success:boolean
+export class AuthResponse {
+  @Field()
+  message: string;
+  @Field(() => Boolean)
+  success: boolean;
 }

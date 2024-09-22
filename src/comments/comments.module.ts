@@ -6,7 +6,7 @@ import { User } from 'src/auth/entities/user.entity';
 import { Comment } from './entities/comment.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([User,Comment])],
+  imports: [TypeOrmModule.forFeature([User, Comment])],
   providers: [CommentsResolver, CommentsService],
 })
 export class CommentsModule {}

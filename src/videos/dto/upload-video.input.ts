@@ -1,15 +1,13 @@
-import { Field, InputType, Int } from "@nestjs/graphql";
+import { Field, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
 export class UploadVideo {
-    @Field(()=>Int)
-    id_user:number;
+  @Field(() => Int)
+  id_user: number;
 
-    @Field()
-    content:string;
+  @Field()
+  content: string;
 
-    
-    @Field()
-    url:string;
-    
+  @Field()
+  url: string;
 }

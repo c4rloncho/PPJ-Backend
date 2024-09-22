@@ -12,9 +12,10 @@ dotenv.config();
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '3h' },
-    }),TypeOrmModule.forFeature([User])
+    }),
+    TypeOrmModule.forFeature([User]),
   ],
-  providers: [AuthService,AuthResolver],
+  providers: [AuthService, AuthResolver],
   exports: [AuthService],
 })
 export class AuthModule {}

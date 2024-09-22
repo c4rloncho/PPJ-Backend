@@ -23,29 +23,32 @@ export class VideosService {
         where: { id: input.id_user },
         relations: ['videos'],
       });
-      
+
       if (!user) {
         throw new NotFoundException('Usuario no encontrado');
       }
-  
+
       const video = new Video();
       video.content = input.content;
       video.url = input.url;
       video.user = user;
-  
+
       const savedVideo = await manager.save(video);
-      
+
       user.videos.push(savedVideo);
       await manager.save(user);
-  
+
       return {
         message: 'Video guardado',
-        success: true
+        success: true,
       };
     });
   }
 
-  async findPaginated(page: number, limit: number): Promise<PaginatedVideosResponse> {
+  async findPaginated(
+    page: number,
+    limit: number,
+  ): Promise<PaginatedVideosResponse> {
     const skip = (page - 1) * limit;
 
     const [videos, total] = await this.videoRepository.findAndCount({
@@ -64,6 +67,4 @@ export class VideosService {
       total,
     };
   }
-
-
 }

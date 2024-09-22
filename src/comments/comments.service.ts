@@ -11,11 +11,11 @@ import { User } from 'src/auth/entities/user.entity';
 export class CommentsService {
   constructor(
     @InjectRepository(Comment)
-    private readonly commentRepository:Repository<Comment>,
+    private readonly commentRepository: Repository<Comment>,
     @InjectRepository(User)
-    private readonly userRepository:Repository<User>,
+    private readonly userRepository: Repository<User>,
     private dataSource: DataSource,
-  ){}
+  ) {}
   async create(input: CreateCommentInput): Promise<Comment> {
     return await this.dataSource.transaction(async (manager) => {
       const user = await manager.findOne(User, {
@@ -31,10 +31,10 @@ export class CommentsService {
       comment.createdAt = new Date();
 
       const savedComment = await manager.save(comment);
-  
+
       // Relación inversa con usuario
       user.comments.push(savedComment);
-      await manager.save(user); 
+      await manager.save(user);
       return savedComment;
     });
   }
@@ -63,11 +63,14 @@ export class CommentsService {
       total,
     };
   }
-  async findByUser(id: number):Promise<Comment[]> {
-    const user = await this.userRepository.findOne({where:{id:id},relations:['comments']});
-    if(!user){
+  async findByUser(id: number): Promise<Comment[]> {
+    const user = await this.userRepository.findOne({
+      where: { id: id },
+      relations: ['comments'],
+    });
+    if (!user) {
       throw new NotFoundException('usuario no encontrado');
-    };
+    }
     const comments = user.comments;
     return comments;
   }

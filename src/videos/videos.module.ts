@@ -6,7 +6,7 @@ import { Video } from './entities/video.entity';
 import { User } from 'src/auth/entities/user.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Video,User])],
+  imports: [TypeOrmModule.forFeature([Video, User])],
   providers: [VideosResolver, VideosService],
 })
 export class VideosModule {}
